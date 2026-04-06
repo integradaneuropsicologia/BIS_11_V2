@@ -333,7 +333,7 @@
    const AREA_PACIENTE_URL = "https://integradaneuropsicologia.github.io/area-do-paciente-v2/";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const FREQ5   = ["Nunca/Raramente","Pouca frequência","Regular","Muito frequente", "Sempre/Quase sempre"];
+    const FREQ5   = ["Nunca/Raramente","De vez em quando","Com frequência", "Sempre/Quase sempre"];
     const SEVER4  = ["Não","Leve","Moderada","Grave", "Não se aplica"];
     const YESNO   = ["Sim","Não", "Não se aplica"];
     const YNP     = ["Sim","Não","Não sei", "Não se aplica"];
@@ -344,12 +344,10 @@
  **************************************************************/
 const SCALE_SCORE_MAPS = {
   FREQ5: {
-    "Nunca/Raramente": 0,
-    "Pouca frequência":1,
-    "Regular": 2,
-    "Muito frequente": 3,
-     "Sempre/Quase sempre": 4
-   
+"Nunca/Raramente": 1,
+"De vez em quando":2,
+"Com frequência":3,
+ "Sempre/Quase sempre":4   
   },
 
   SEVER4: {
