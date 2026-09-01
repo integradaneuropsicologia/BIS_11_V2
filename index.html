@@ -647,21 +647,21 @@ const FORM_QUESTIONS = [
 ];
 
 const INDICATORS_CONFIG = {
-  impulsividade_por_falta_de_controle_inibitorio : {
-    label: "impulsividade_por_falta_de_controle_inibitorio",
-    questions: ["2","3","5","6","8","9","11","14","16","17","18","19","20","21","22","23","24","25","26","28"],
-    },
-
-    impulsividade_por_falta_de_planejamento: {
-        label: "impulsividade_por_falta_de_planejamento",
-         questions: ["1","4","7","10","12","13","27","30"],
-
+  impulsividade_motora: {
+    label: "Impulsividade motora",
+    questions: ["2","3","4","16","17","19","21","22","23","25","30"]
   },
-
-  Escore_Geral_de_Impulsividade: {
-        label: "Escore_Geral_de_Impulsividade",
-        questions: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
-
+  impulsividade_atencional_cognitiva: {
+    label: "Impulsividade atencional/cognitiva",
+    questions: ["5","6","9","11","20","24","26","28"]
+  },
+  impulsividade_por_nao_planejamento: {
+    label: "Impulsividade por não planejamento",
+    questions: ["1","7","8","10","12","13","14","15","18","27","29"]
+  },
+  pontuacao_total_bis_11: {
+    label: "Pontuação total BIS-11",
+    questions: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"]
   }
 };
 
@@ -1342,6 +1342,12 @@ function getMaxScaleScore(scaleName) {
   return nums.length ? Math.max(...nums) : 0;
 }
 
+function getMinScaleScore(scaleName) {
+  const map = SCALE_SCORE_MAPS[scaleName] || {};
+  const nums = Object.values(map).filter(v => Number.isFinite(v));
+  return nums.length ? Math.min(...nums) : 0;
+}
+
 function scoreSingleAnswer(question, rawValue) {
   if (!question || !question.scale) return null;
 
@@ -1365,8 +1371,9 @@ function scoreSingleAnswer(question, rawValue) {
     };
   }
 
+  const minScore = getMinScaleScore(question.scale);
   const maxScore = getMaxScaleScore(question.scale);
-  const finalScore = question.reverse ? (maxScore - baseScore) : baseScore;
+  const finalScore = question.reverse ? (minScore + maxScore - baseScore) : baseScore;
 
   return {
     rawValue,
